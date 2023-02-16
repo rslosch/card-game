@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
-import { AnimatePresence } from "framer-motion"
-import Hero from "./components/Hero"
-import PlayCardGame from "./pages/PlayCardGame"
-import Card from "./components/Card"
+import Navbar from "./components/Navbar"
+import Hero from "./components/HeroSection/Hero"
+import PlayCardGame from "./components/GameSection/PlayCardGame"
 
 export const cards = [
   {
@@ -22,8 +21,23 @@ export const cards = [
 
 function App() {
 
+  const [theme, setTheme] = useState("light")
+
+  useEffect(() => {
+    if(theme === "dark") {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }, [theme])
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
+
   return (
-    <div >
+    <div className="overflow-hidden" >
+      <Navbar onThemeSwitch={handleThemeSwitch} theme={theme}/>
       <Hero />
       <PlayCardGame />
     </div>
