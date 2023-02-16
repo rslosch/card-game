@@ -1,22 +1,37 @@
-import { useEffect } from "react"
-import { motion } from "framer-motion"
+import React, { useState, useEffect } from "react";
 
-const Card = ({ id, description, onNext }) => {
+const Card = ({ id, description, type }) => {
+
+    const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth < 768)
+      };
+  
+      window.addEventListener("resize", handleResize)
+  
+      // Call the handleResize function once to set the initial state
+      handleResize()
+  
+      // Clean up the event listener when the component is unmounted
+      return () => window.removeEventListener("resize", handleResize)
+    }, [])
 
   return (
-      <motion.div
-        key={id}
-        initial={{ x: -window.innerWidth, opacity: 0 }}
-        animate={{ x: 0, opacity: 1, rotate: [0,180,360] }}
-        exit={{x: window.innerWidth, opacity: 0}}
-        transition={{ duration: 0.5 }}
-        className="bg-white rounded-3xl shadow-md border-2 border-black p-4 h-3/5 w-80 md:w-96 lg:w-96 xl:w-96"
-    >
-        <div class="flex flex-col items-center justify-center p-4">
-            <p className="text-gray-600 text-center text-2xl mt-2">{description.toUpperCase()}</p>
-            <h1 className="text-lg font-medium mt-4 font-serif">CARDS FOR INSANITY</h1>
+        <div class="flex flex-col items-center justify-start p-4 rounded-xl h-full bg-white dark:bg-black shadow-md border-2 border-black dark:border-white ">
+            <div class="flex items-center justify-center m-auto overflow-auto">
+                <p className={`text-black dark:text-white text-center ${type === "HeroCard" && isSmallScreen ? "text-xs" : "text-lg"} md:text-xl uppercase object-contain`}>{description}</p>
+            </div>
+            {isSmallScreen && type === "HeroCard" ? (
+                <></>
+            ) : (
+                <div>
+                    <h1 className="text-xs md:text-sm font-serif dark:text-white">CARDS FOR INSANITY</h1>
+                </div>
+            )}
+           
         </div>
-    </motion.div>
   )
 }
 
