@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react"
+
+import { CardsProvider } from "./context/cardsContext"
+import { ScreenSizeProvider } from "./context/screenSizeContext"
+
 import Navbar from "./components/Navbar"
 import Hero from "./components/HeroSection/Hero"
 import PlayCardGame from "./components/GameSection/PlayCardGame"
@@ -37,9 +41,13 @@ function App() {
 
   return (
     <div className="overflow-hidden" >
-      <Navbar onThemeSwitch={handleThemeSwitch} theme={theme}/>
-      <Hero />
-      <PlayCardGame />
+      <CardsProvider>
+      <ScreenSizeProvider>
+        <Navbar onThemeSwitch={handleThemeSwitch} theme={theme}/>
+        <Hero />
+        <PlayCardGame />
+      </ScreenSizeProvider>
+      </CardsProvider>
     </div>
   )
 }

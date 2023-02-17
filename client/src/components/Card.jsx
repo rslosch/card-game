@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react"
+import { ScreenSizeContext } from "../context/screenSizeContext"
 
 const Card = ({ id, description, type }) => {
 
-    const [isSmallScreen, setIsSmallScreen] = useState(false)
-
-    useEffect(() => {
-      const handleResize = () => {
-        setIsSmallScreen(window.innerWidth < 768)
-      };
-  
-      window.addEventListener("resize", handleResize)
-  
-      // Call the handleResize function once to set the initial state
-      handleResize()
-  
-      // Clean up the event listener when the component is unmounted
-      return () => window.removeEventListener("resize", handleResize)
-    }, [])
+  const { isSmallScreen } = useContext(ScreenSizeContext)
 
   return (
         <div class="flex flex-col items-center justify-start p-4 rounded-xl h-full bg-white dark:bg-black shadow-md border-2 border-black dark:border-white ">
