@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Card from '../Card'
+
+import { CardsContext } from '../../context/cardsContext'
+
 import { motion } from "framer-motion"
 
 const cards = [
@@ -30,15 +33,19 @@ const cards = [
       }
 ]
 
-const HeroCard = ({ id, description, period }) => {
+const HeroCard = ({ period }) => {
+  const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
+
 
     const mainHeroCardVariant = {
         hidden: {
             opacity: 0,
-            y: window.innerHeight
+            // zIndex: 100,
+            y: -window.innerHeight
         },
         visible: (period) => ({
             opacity: 1,
+            zIndex: 101,
             y: 0,
             scale: [3,2,1.5,1,0.6,1],
             rotate: [0,5,15,30,20,0],
@@ -109,19 +116,23 @@ const HeroCard = ({ id, description, period }) => {
 
   return (
     <motion.div
-        key={id}
+        key={mainHeroCard.id}
         initial="hidden" 
         animate="visible"
         variants={mainHeroCardVariant} 
         custom={period}
-        className="h-48 w-36 md:h-96 md:w-72 relative z-auto"
+        className="
+        h-48 
+        w-36 
+        md:h-96 md:w-72 
+        relative"
+        // "z-50"
     > 
-        <Card id={id} description={description}/>
-       { cards.map((card, index) => (
+        <Card id={mainHeroCard.id} content={mainHeroCard.content}/>
+       { randomHeroCards.map((card, index) => (
             <motion.div 
                 key={card.id} 
                 id={card.id} 
-                description={card.description} 
                 variants={childrenHeroCardVariant}
                 custom={childrenInfo[index]}
                 whileHover={{ 
@@ -137,7 +148,7 @@ const HeroCard = ({ id, description, period }) => {
                 }}
                 className={`h-full w-full absolute top-0 left-0 z-${cards.length-index}`}
             >
-                <Card id={card.id} description={card.description} type={"HeroCard"}/>
+                <Card id={card.id} content={card.content} type={"HeroCard"}/>
             </motion.div>
         ))}
     </motion.div>   

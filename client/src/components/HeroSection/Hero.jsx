@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import HeroCard from './HeroCard'
+
+import { CardsContext } from '../../context/cardsContext'
 
 import { motion } from 'framer-motion'
 
 const Hero = () => {
+  const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
+
   const [loopNum, setLoopNum] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   const [text, setText] = useState('')
@@ -70,21 +74,29 @@ const Hero = () => {
     }),
   }
 
-  return (
-    <div className='dark:bg-black pt-4'>
+  if (!randomHeroCards || !mainHeroCard) {
+    return (
       <div className='flex flex-col justify-center items-center h-screen w-screen'>
-        <motion.div
-          initial="visible"
-          animate="hidden"
-          variants={titleVariant}
-          custom={period}
-        >
-          <h1 className='text-4xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
-        </motion.div>
-        <HeroCard id={1} description='I am not a card' period={period}/>
+        <img src={'loader.svg'} alt="Loading..." />
       </div>
-    </div>
-  )
+    )
+  } else {  
+    return (
+      <div className='dark:bg-black pt-4'>
+        <div className='flex flex-col justify-center items-center h-screen w-screen'>
+          <motion.div
+            initial="visible"
+            animate="hidden"
+            variants={titleVariant}
+            custom={period}
+          >
+            <h1 className='text-4xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
+          </motion.div>
+          <HeroCard period={period}/>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Hero

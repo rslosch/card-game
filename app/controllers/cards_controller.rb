@@ -8,6 +8,12 @@ class CardsController < ApplicationController
     render json: @cards
   end
 
+  def getRandomHeros
+    hero_cards = Card.all.sample(7) # Replace `HeroCard` with your model name
+
+    render json: hero_cards
+  end
+
   # GET /cards/1
   def show
     render json: @card
