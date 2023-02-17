@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../Card'
 import { motion } from "framer-motion"
 
@@ -33,6 +33,7 @@ const cards = [
 
 
 const HeroCard = ({ id, description, period }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null)
 
     const mainHeroCardVariant = {
         hidden: {
@@ -46,15 +47,49 @@ const HeroCard = ({ id, description, period }) => {
             rotate: [0,5,15,30,20,0],
             transition:{
                 type: "spring",
-                // bounce: 0.7,
                 ease: "easeInOut",
                 delay: (period * 9) /1000,
                 duration: (period * 0.5) /1000,
-                delayChildren: (period * 11) /1000,
-                staggerChildren: (period * 0.1) /1000,
+                delayChildren: (period * 10) /1000,
+                staggerChildren: (period * 0.08) /1000,
             } 
         }),
     }
+
+    //Add conditional check if small screen or not
+    const childrenInfo = [
+        {
+          x: 230,
+          y: -280,
+          rotate: -12,
+        },
+        {
+          x: 300, 
+          y: 0,
+          rotate: 22,
+
+        },
+        {
+          x: 350, 
+          y: 200,
+          rotate: 14,
+        },
+        {
+          x: -150, 
+          y: 220,
+          rotate: -18,
+        },
+        {
+          x: -400, 
+          y: -50,
+          rotate: -7,          
+        },
+        {
+          x: -150,
+          y: -200,
+          rotate: 5,
+        },
+    ]
 
     const childrenHeroCardVariant = {
         hidden: {
@@ -62,17 +97,35 @@ const HeroCard = ({ id, description, period }) => {
             x: 0,
             y: 0
         },
-        visible: (index) => ({
+        visible: (childrenInfo) => ({
             opacity: 1,
-            x: 100 * (index+1),
+            x: childrenInfo.x,
+            y: childrenInfo.y,
+            rotate: childrenInfo.rotate,
             transition:{
                 type: "spring",
                 bounce: 0.7,
-                // scale: [1.2,1.6,1.2,1],
+                duration: 1.2
             }
-
-
+        }),
+        hover: (childrenInfo) => ({
+          scale: [.9,1.2],        
+          rotate: childrenInfo.hoverRotate,
+          transition:{
+            type: "spring",
+            duration: .5,
+            repeat: 1,
+            repeatType: 'mirror',
+          }
         })
+    }
+
+    const handleHoverStart = (index) => {
+      setHoveredIndex(index)
+    }
+  
+    const handleHoverEnd = () => {
+      setHoveredIndex(hoveredIndex)
     }
 
   return (
@@ -91,11 +144,25 @@ const HeroCard = ({ id, description, period }) => {
                 id={card.id} 
                 description={card.description} 
                 variants={childrenHeroCardVariant}
-                custom={index}
+                custom={childrenInfo[index]}
+                whileHover={{ 
+                  scale: [0.9, 1.2],
+                  rotate: 0,
+                  transition:{
+                    type: "spring",
+                    duration: 2,
+                    repeat: 1,
+                    repeatType: 'mirror',
+                  }
+                }}
+                onHoverStart={() => handleHoverStart(index)}
+                onHoverEnd={handleHoverEnd}
+                style={{
+                  zIndex: index === hoveredIndex ? 10 : 1
+                }}
                 className="h-full w-full absolute top-0 left-0"
             >
-                <Card id={card.id} description={card.description} type={"HeroCard"}
-/>
+                <Card id={card.id} description={card.description} type={"HeroCard"}/>
             </motion.div>
         ))}
     </motion.div>   
