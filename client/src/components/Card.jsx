@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react"
 import { ScreenSizeContext } from "../context/screenSizeContext"
 
-const Card = ({ id, description, type }) => {
+const Card = ({ content, type }) => {
 
   const { isSmallScreen } = useContext(ScreenSizeContext)
 
   return (
         <div class="flex flex-col items-center justify-start p-4 rounded-xl h-full bg-white dark:bg-black shadow-md border-2 border-black dark:border-white ">
             <div class="flex items-center justify-center m-auto overflow-auto">
-                <p className={`text-black dark:text-white text-center ${type === "HeroCard" && isSmallScreen ? "text-xs" : "text-lg"} md:text-xl uppercase object-contain`}>{description}</p>
+                <p className={`text-black dark:text-white text-center ${type === "HeroCard" && isSmallScreen ? "text-xs" : "text-lg"} md:text-xl uppercase object-contain`}>{content}</p>
             </div>
             {isSmallScreen && type === "HeroCard" ? (
                 <></>

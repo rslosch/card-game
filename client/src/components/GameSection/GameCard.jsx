@@ -2,7 +2,7 @@ import React from 'react'
 import Card from '../Card'
 import { motion } from "framer-motion"
 
-const GameCard = ({ id, description }) => {
+const GameCard = ({ id, content }) => {
   return (
     <motion.div
         key={id}
@@ -12,7 +12,7 @@ const GameCard = ({ id, description }) => {
         transition={{ duration: 0.3 }}
         className="h-96 w-72"
     > 
-        <Card id={id} description={description} type="GameCard" />
+        <Card id={id} content={content} type="GameCard" />
     </motion.div>
 )
 }
