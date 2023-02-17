@@ -21,7 +21,7 @@ const PlayCardGame = () => {
     const currentCardIndex = cards.findIndex((card,index) => index === currentCard)
   
     return (
-      <div className="flex flex-col justify-center items-center h-screen w-screen dark:bg-black">
+      <div className="flex flex-col justify-center items-center h-full w-full md:h-screen md:w-screen dark:bg-black">
         <AnimatePresence mode='wait'>
         {currentCardIndex !== -1 && (
             <GameCard

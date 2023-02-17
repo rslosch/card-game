@@ -21,17 +21,12 @@ const Navbar = ({onThemeSwitch, theme}) => {
 
   return (
     <div className={`fixed w-full ${
-        showHeader ? "bg-transparent z-50" : "hidden"
+        showHeader ? "bg-transparent z-[101]" : "hidden"
       } transition-all duration-500 ease-in-out`}
     >
         <div className="container mx-auto px-4 z-50">
-            <div className={`flex ${isSmallScreen ? "justify-end" : "justify-between"} items-center py-4`}>
-
-                {isSmallScreen ? (
-                    <></>
-                ): (
-                    <div className="dark:text-white font-bold text-lg">CARDS FOR INSANITY</div>
-                )}
+            <div className={`flex justify-between items-center py-4`}>
+                    <div className="dark:text-white font-bold text-sm md:text-lg">CARDS FOR INSANITY</div>
 
                 <div className="flex items-center">
                     <button className="dark:text-white hover:text-grey-8 text-sm mr-4">

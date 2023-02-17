@@ -13,7 +13,7 @@ const Hero = () => {
   const [text, setText] = useState('')
   const [delta, setDelta] = useState(200)
   const toRotate = [ "AGAINST", "FOR INSANITY"] 
-  const period = 250 // Change this to increase/decrease the speed of the interval
+  const period = 1000 // Change this to increase/decrease the speed of the interval
 
   // Ref to make interval clearable within tick()
   const tickerRef = useRef(null)
@@ -82,7 +82,7 @@ const Hero = () => {
     )
   } else {  
     return (
-      <div className='dark:bg-black pt-4'>
+      <div className='dark:bg-black pt-8'>
         <div className='flex flex-col justify-center items-center h-screen w-screen'>
           <motion.div
             initial="visible"
@@ -90,7 +90,7 @@ const Hero = () => {
             variants={titleVariant}
             custom={period}
           >
-            <h1 className='text-4xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
+            <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
           </motion.div>
           <HeroCard period={period}/>
         </div>
