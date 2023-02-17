@@ -77,7 +77,6 @@ const Hero = () => {
           initial="visible"
           animate="hidden"
           variants={titleVariant}
-          
           custom={period}
         >
           <h1 className='text-4xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>

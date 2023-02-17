@@ -30,10 +30,7 @@ const cards = [
       }
 ]
 
-
-
 const HeroCard = ({ id, description, period }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
 
     const mainHeroCardVariant = {
         hidden: {
@@ -107,25 +104,7 @@ const HeroCard = ({ id, description, period }) => {
                 bounce: 0.7,
                 duration: 1.2
             }
-        }),
-        hover: (childrenInfo) => ({
-          scale: [.9,1.2],        
-          rotate: childrenInfo.hoverRotate,
-          transition:{
-            type: "spring",
-            duration: .5,
-            repeat: 1,
-            repeatType: 'mirror',
-          }
         })
-    }
-
-    const handleHoverStart = (index) => {
-      setHoveredIndex(index)
-    }
-  
-    const handleHoverEnd = () => {
-      setHoveredIndex(hoveredIndex)
     }
 
   return (
@@ -135,7 +114,7 @@ const HeroCard = ({ id, description, period }) => {
         animate="visible"
         variants={mainHeroCardVariant} 
         custom={period}
-        className="h-48 w-36 md:h-96 md:w-72 relative"
+        className="h-48 w-36 md:h-96 md:w-72 relative z-auto"
     > 
         <Card id={id} description={description}/>
        { cards.map((card, index) => (
@@ -146,21 +125,17 @@ const HeroCard = ({ id, description, period }) => {
                 variants={childrenHeroCardVariant}
                 custom={childrenInfo[index]}
                 whileHover={{ 
-                  scale: [0.9, 1.2],
-                  rotate: 0,
-                  transition:{
-                    type: "spring",
-                    duration: 2,
-                    repeat: 1,
-                    repeatType: 'mirror',
-                  }
+                  scale: [0.9, 1.1],
+                  rotate: [childrenInfo[index].rotate,0, childrenInfo[index].rotate],
+                  zIndex: 100
+                  // transition:{
+                  //   type: "spring",
+                  //   duration: 2,
+                  //   repeat: 1,
+                  //   repeatType: 'mirror',
+                  // }
                 }}
-                onHoverStart={() => handleHoverStart(index)}
-                onHoverEnd={handleHoverEnd}
-                style={{
-                  zIndex: index === hoveredIndex ? 10 : 1
-                }}
-                className="h-full w-full absolute top-0 left-0"
+                className={`h-full w-full absolute top-0 left-0 z-${cards.length-index}`}
             >
                 <Card id={card.id} description={card.description} type={"HeroCard"}/>
             </motion.div>
