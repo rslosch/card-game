@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import GameCard from './GameCard'
+import Slider from './Slider'
 
 import { CardsContext } from '../../context/cardsContext'
 
@@ -30,9 +31,12 @@ const PlayCardGame = () => {
             />
         )}
         </AnimatePresence>
-        <button onClick={handleNext} className="bg-black dark:bg-white text-white dark:text-black border border-white dark:border-black py-2 px-4 rounded mt-4">
-            SHUFFLE
-        </button>
+        <div className='flex flex-col justify-center items-center py-2'>
+          <button onClick={handleNext} className="bg-black dark:bg-white text-white dark:text-black border border-white dark:border-black w-1/3 py-2 px-4 rounded my-4">
+              SHUFFLE
+          </button>
+          <Slider />
+        </div>
     </div>
     )
 }
