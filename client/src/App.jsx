@@ -1,27 +1,16 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { ScreenSizeContext } from "./context/screenSizeContext"
 
 import { CardsProvider } from "./context/cardsContext"
 import { ScreenSizeProvider } from "./context/screenSizeContext"
 
+import { Route, Routes } from 'react-router-dom'
+
 import Navbar from "./components/Navbar"
+import Signup from "./components/Signup"
+import Login from "./components/Login"
 import Hero from "./components/HeroSection/Hero"
 import PlayCardGame from "./components/GameSection/PlayCardGame"
-
-export const cards = [
-  {
-    id: 1,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a cursus diam, pretium placerat ligula. Vivamus varius sodales maximus. Maecenas.",
-  },
-  {
-    id: 2,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet libero imperdiet, facilisis eros eget, placerat eros. Sed non.",
-    
-  },
-  {
-    id: 3,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet commodo mauris. Duis urna massa, congue eget tincidunt auctor.",
-  },
-]
 
 function App() {
 
@@ -43,13 +32,17 @@ function App() {
     <div className="overflow-hidden" >
       <CardsProvider>
       <ScreenSizeProvider>
-        <Navbar onThemeSwitch={handleThemeSwitch} theme={theme}/>
-        <Hero />
-        <PlayCardGame />
+      <Navbar onThemeSwitch={handleThemeSwitch} theme={theme} />
+        <Routes>
+          <Route path ='/signup' element={<Signup />}/>
+          <Route path ='/login' element={<Login />}/>
+          <Route path='/' element={<><Hero/><PlayCardGame/></>} />
+          <Route path='play' element={<PlayCardGame />} />
+        </Routes>
       </ScreenSizeProvider>
       </CardsProvider>
     </div>
   )
 }
 
-export default App;
+export default App
