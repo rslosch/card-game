@@ -73,30 +73,22 @@ const Hero = () => {
       }
     }),
   }
-
-  if (!randomHeroCards || !mainHeroCard) {
-    return (
+  
+  return (
+    <div className='dark:bg-black pt-8'>
       <div className='flex flex-col justify-center items-center h-screen w-screen'>
-        <img src={'loader.svg'} alt="Loading..." />
+        <motion.div
+          initial="visible"
+          animate="hidden"
+          variants={titleVariant}
+          custom={period}
+        >
+          <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
+        </motion.div>
+        <HeroCard period={period}/>
       </div>
-    )
-  } else {  
-    return (
-      <div className='dark:bg-black pt-8'>
-        <div className='flex flex-col justify-center items-center h-screen w-screen'>
-          <motion.div
-            initial="visible"
-            animate="hidden"
-            variants={titleVariant}
-            custom={period}
-          >
-            <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
-          </motion.div>
-          <HeroCard period={period}/>
-        </div>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Hero

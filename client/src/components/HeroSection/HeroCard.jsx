@@ -86,41 +86,48 @@ const HeroCard = ({ period }) => {
             }
         })
     }
-
-  return (
-    <motion.div
-        key={mainHeroCard.id}
-        initial="hidden" 
-        animate="visible"
-        variants={mainHeroCardVariant} 
-        custom={period}
-        className="h-48 w-36 md:h-96 md:w-72 z-[101] relative"
-    > 
-      <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"} subtype={"Main"}/>
-      {randomHeroCards.map((card, index) => (
-      <motion.div 
-          key={card.id} 
-          id={card.id} 
-          variants={childrenHeroCardVariant}
-          custom={childrenInfo[index]}
-          whileHover={{ 
-            scale: [0.9, 1.1],
-            rotate: [childrenInfo[index].rotate,0, childrenInfo[index].rotate],
-            zIndex: 100
-            // transition:{
-            //   type: "spring",
-            //   duration: 2,
-            //   repeat: 1,
-            //   repeatType: 'mirror',
-            // }
-          }}
-          className={`h-full w-full absolute top-0 left-0 z-${randomHeroCards.length-index}`}
-      >
-        <Card id={card.id} content={card.content} type={"HeroCard"}/>
-      </motion.div>
-        ))}
-    </motion.div>   
-  )
+  
+  if (!randomHeroCards || !mainHeroCard) {
+    return (
+      <></>
+    )
+  } 
+  else {  
+    return (
+      <motion.div
+          key={mainHeroCard.id}
+          initial="hidden" 
+          animate="visible"
+          variants={mainHeroCardVariant} 
+          custom={period}
+          className="h-48 w-36 md:h-96 md:w-72 z-[101] relative"
+      > 
+        <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"} subtype={"Main"}/>
+        {randomHeroCards.map((card, index) => (
+        <motion.div 
+            key={card.id} 
+            id={card.id} 
+            variants={childrenHeroCardVariant}
+            custom={childrenInfo[index]}
+            whileHover={{ 
+              scale: [0.9, 1.1],
+              rotate: [childrenInfo[index].rotate,0, childrenInfo[index].rotate],
+              zIndex: 100
+              // transition:{
+              //   type: "spring",
+              //   duration: 2,
+              //   repeat: 1,
+              //   repeatType: 'mirror',
+              // }
+            }}
+            className={`h-full w-full absolute top-0 left-0 z-${randomHeroCards.length-index}`}
+        >
+          <Card id={card.id} content={card.content} type={"HeroCard"}/>
+        </motion.div>
+          ))}
+      </motion.div>   
+    )
+  }
 }
 
 export default HeroCard
