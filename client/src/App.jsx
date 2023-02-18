@@ -3,6 +3,7 @@ import { ScreenSizeContext } from "./context/screenSizeContext"
 
 import { CardsProvider } from "./context/cardsContext"
 import { ScreenSizeProvider } from "./context/screenSizeContext"
+import { UserProvider } from "./context/userContext"
 
 import { Route, Routes } from 'react-router-dom'
 
@@ -32,6 +33,7 @@ function App() {
     <div className="overflow-hidden" >
       <CardsProvider>
       <ScreenSizeProvider>
+      <UserProvider>
       <Navbar onThemeSwitch={handleThemeSwitch} theme={theme} />
         <Routes>
           <Route path ='/signup' element={<Signup />}/>
@@ -39,6 +41,7 @@ function App() {
           <Route path='/' element={<><Hero/><PlayCardGame/></>} />
           <Route path='play' element={<PlayCardGame />} />
         </Routes>
+      </UserProvider>
       </ScreenSizeProvider>
       </CardsProvider>
     </div>

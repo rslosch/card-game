@@ -1,5 +1,8 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+
 import { useNavigate } from "react-router-dom"
+
+import { UserContext } from "../context/userContext"
 
 const Login = () => {
 
@@ -7,13 +10,33 @@ const Login = () => {
     email: "",
     password: ""
   })
+  const [error, setError] = useState(null)
+
+  const { login } = useContext(UserContext)
 
   const navigate = useNavigate()
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    // TODO: handle form submission
+    // write async function to send form data to '/login' endpoint
+    const loginPost = async () => {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await response.json()
+        if (data.errors) {
+            setError(data.errors)
+        } else {
+            login(data)
+            navigate('/')
+        }
+    }
+    loginPost()
   }
 
   const handleChange = (e) => {
@@ -56,13 +79,14 @@ const Login = () => {
             Log in
           </button>
         </form>
-        <div className="mt-4">
+        <div className="mt-2">
           <p className="text-gray-700 dark:text-white">Don't have an Account yet? 
             <button onClick={() => navigate('/signup')}className="ml-2 text-primary-3 hover:text-primary-5 dark:text-primary-3 dark:hover:text-blue-100">
                 Sign up here
             </button>
         </p>
         </div>
+        {error && <p className="text-red-600 text-start font-medium uppercase tracking-wide leading-4 mt-4">{error}</p>}
       </div>
     </div>
   )

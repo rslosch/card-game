@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+
 import { ScreenSizeContext } from '../context/screenSizeContext'
+
 import { LightModeIcon, DarkModeIcon } from '../utils/icons'
+
+import { UserContext } from '../context/userContext'
 
 const Navbar = ({onThemeSwitch, theme}) => {
     const [showHeader, setShowHeader] = useState(true)
 
-    const {isSmallScreen} = useContext(ScreenSizeContext)
+    const { isSmallScreen } = useContext(ScreenSizeContext)
+    const { user, logout } = useContext(UserContext)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
       const handleScroll = () => {
@@ -16,8 +25,30 @@ const Navbar = ({onThemeSwitch, theme}) => {
   
       return () => {
         window.removeEventListener("scroll", handleScroll)
-      };
+      }
     }, [])
+
+    const handleLogout = () => {
+      //delete session from backend
+      const logoutPost = async () => {
+        const response = await fetch('/logout', {
+          method: 'DELETE'
+        })
+      }
+      logoutPost()    
+
+      logout()
+      //make redirect to home page more fluid
+      navigate('/')
+    }
+
+    const displayLoginOrLogout = (user) => {
+      if(user) {
+        return <button onClick={handleLogout} className="dark:text-white hover:text-grey-8 text-sm mr-4"> LOGOUT</button>
+      } else {
+        return <button onClick={() => navigate('/login')} className="dark:text-white hover:text-grey-8 text-sm mr-4"> LOGIN</button>
+      }
+    }
 
   return (
     <div className={`fixed w-full ${
@@ -26,8 +57,8 @@ const Navbar = ({onThemeSwitch, theme}) => {
     >
         <div className="container mx-auto px-4 z-50">
             <div className={`flex justify-between items-center py-4`}>
-                    <div className="dark:text-white font-bold text-sm md:text-lg">CARDS FOR INSANITY</div>
-
+                <div className="dark:text-white font-bold text-sm md:text-lg">CARDS FOR INSANITY</div>
+                {user && <div className="dark:text-white font-bold text-sm md:text-lg">Hello {user.email}</div>}
                 <div className="flex items-center">
                     <button className="dark:text-white hover:text-grey-8 text-sm mr-4">
                         ABOUT
@@ -35,6 +66,8 @@ const Navbar = ({onThemeSwitch, theme}) => {
                     <button className="dark:text-white hover:text-grey-8 text-sm mr-4">
                         PLAY
                     </button>
+                    {/* {user ? <button className="dark:text-white hover:text-grey-8 text-sm mr-4"> LOGOUT </button> : <button className="dark:text-white hover:text-grey-8 text-sm mr-4"> LOGIN </button>} */}
+                    {displayLoginOrLogout(user)}
                     <button onClick={onThemeSwitch} className="dark:text-white hover:text-grey-8 text-sm">
                         {theme === "light" ? <DarkModeIcon /> : <LightModeIcon /> }
                     </button>

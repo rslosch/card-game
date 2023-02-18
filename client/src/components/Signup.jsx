@@ -1,5 +1,8 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+
 import { useNavigate } from "react-router-dom"
+
+import { UserContext } from "../context/userContext"
 
 const Signup = () => {
 
@@ -8,13 +11,34 @@ const Signup = () => {
     password: "",
     passwordConfirmation: ""
   })
+  const [error, setError] = useState([])
+  
+  const { signup } = useContext(UserContext)
 
   const navigate = useNavigate()
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    // TODO: handle form submission
+    // async function to send form data to '/signup' endpoint
+    const signupPost = async () => {
+        const response = await fetch('/signup', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await response.json()
+        console.log("data:",data)
+        if (data.errors) {
+            setError(data.errors)
+        } else {
+            signup(data)
+            navigate('/')
+        }
+    }
+    signupPost()
   }
 
   const handleChange = (e) => {
@@ -22,7 +46,7 @@ const Signup = () => {
         ...form,
         [e.target.id] : e.target.value
     })
-}
+  } 
 
   return (
     <div className="flex justify-center items-center h-screen bg-white dark:bg-black">
@@ -38,7 +62,6 @@ const Signup = () => {
               placeholder="Email"
               value={form.email}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="mb-4">
@@ -50,32 +73,39 @@ const Signup = () => {
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="mb-6">
             <input
               className="form-input w-full border p-2 rounded-lg dark:border-white dark:bg-gray-700 dark:text-white placeholder:dark:text-white"
               type="password"
-              name="password_confirmation"
-              id="password_confirmation"
+              name="passwordConfirmation"
+              id="passwordConfirmation"
               placeholder="Confirm Password"
               value={form.passwordConfirmation}
               onChange={handleChange}
-              required
             />
           </div>
           <button className="bg-black text-white font-medium py-2 px-4 rounded hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-100" type="submit">
             Sign up
           </button>
         </form>
-        <div className="mt-4">
+        <div className="mt-1 mb-3">
           <p className="text-gray-700 dark:text-white">Already have an Account? 
             <button onClick={() => navigate('/login')}className="ml-2 text-primary-3 hover:text-primary-5 dark:text-primary-3 dark:hover:text-blue-100">
                 Login here
             </button>
         </p>
         </div>
+
+        {error.length > 0 && error.map((err, index) => {
+            return (
+                <div key={index} className="flex flex-col items-start justify-center">
+                    <p className="text-red-600 text-start font-medium uppercase tracking-wide leading-4 mb-2">{err}</p>
+                </div>
+            )
+        })}
+
       </div>
     </div>
   )
