@@ -1,8 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const Slider = () => {
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(2)
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code === 'ArrowLeft') {
+        setValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 2))
+      } else if (event.code === 'ArrowRight') {
+        setValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 10))
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
 
   return (
       <div className="flex flex-col w-96 bg-white rounded-lg px-6 py-4">
