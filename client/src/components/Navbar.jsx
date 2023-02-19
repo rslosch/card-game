@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+
 import { ScreenSizeContext } from '../context/screenSizeContext'
-import { LightModeIcon, DarkModeIcon } from '../utils/icons'
+
+import { LightModeIcon, DarkModeIcon, MenuIcon, XIcon } from '../utils/icons'
+
+import { UserContext } from '../context/userContext'
 
 const Navbar = ({onThemeSwitch, theme}) => {
     const [showHeader, setShowHeader] = useState(true)
+    const [showMenu, setShowMenu] = useState(false)
 
-    const {isSmallScreen} = useContext(ScreenSizeContext)
+    const { isSmallScreen } = useContext(ScreenSizeContext)
+    const { user, logout } = useContext(UserContext)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
       const handleScroll = () => {
@@ -16,8 +26,30 @@ const Navbar = ({onThemeSwitch, theme}) => {
   
       return () => {
         window.removeEventListener("scroll", handleScroll)
-      };
+      }
     }, [])
+
+    const handleLogout = () => {
+      //delete session from backend
+      const logoutPost = async () => {
+        const response = await fetch('/logout', {
+          method: 'DELETE'
+        })
+      }
+      logoutPost()    
+
+      logout()
+      //make redirect to home page more fluid
+      navigate('/')
+    }
+
+    const displayLoginOrLogout = (user) => {
+      if(user) {
+        return <button onClick={handleLogout} className="dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGOUT</button>
+      } else {
+        return <button onClick={() => navigate('/login')} className="dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGIN</button>
+      }
+    }
 
   return (
     <div className={`fixed w-full ${
@@ -26,24 +58,39 @@ const Navbar = ({onThemeSwitch, theme}) => {
     >
         <div className="container mx-auto px-4 z-50">
             <div className={`flex justify-between items-center py-4`}>
-                    <div className="dark:text-white font-bold text-sm md:text-lg">CARDS FOR INSANITY</div>
+                <div className="dark:text-white font-bold text-sm md:text-lg">CARDS FOR INSANITY</div>
+                {user && <div className="dark:text-white font-bold text-sm md:text-lg">Hello {user.email}</div>}
 
-                <div className="flex items-center">
-                    <button className="dark:text-white hover:text-grey-8 text-sm mr-4">
-                        ABOUT
+                <div className="flex items-end">
+                    <button
+                      onClick={() => setShowMenu(!showMenu)}
+                      className="dark:text-white hover:text-grey-8 text-sm mr-4"
+                    >
+                      {showMenu ? <XIcon /> : <MenuIcon />}
                     </button>
-                    <button className="dark:text-white hover:text-grey-8 text-sm mr-4">
-                        PLAY
-                    </button>
-                    <button onClick={onThemeSwitch} className="dark:text-white hover:text-grey-8 text-sm">
-                        {theme === "light" ? <DarkModeIcon /> : <LightModeIcon /> }
-                    </button>
+                  {(showMenu) && (
+                    <div className="relative md:block flex flex-col items-end ">
+                      <div className="absolute top-2 right-5 flex flex-col md:w-48 ">
+                        <button className="dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                          ABOUT
+                        </button>
+                        <button className="dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                          PLAY
+                        </button>
+                        {displayLoginOrLogout(user)}
+                        <button onClick={onThemeSwitch} className="dark:text-white hover:text-grey-8 text-sm self-end">
+                          {theme === "light" ? <DarkModeIcon /> : <LightModeIcon /> }
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
             </div>
         </div>
     </div>  
   )
 }
+
 
 // return (
 // <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-black fixed w-full z-20 top-0 left-0 border-b border-black dark:border-black">
