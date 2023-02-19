@@ -12,3 +12,11 @@ input[type="range"]::-webkit-slider-thumb {
   
     /* @apply w-6 h-6 appearance-none pointer-events-auto; */
   }
+
+  .dark input[type="range"]::-webkit-slider-thumb {
+    @apply bg-white;
+  }
+
+    input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.4);
+  }
