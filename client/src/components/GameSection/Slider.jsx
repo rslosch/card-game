@@ -1,50 +1,33 @@
-import React, { useState } from 'react'
-
-import { motion } from 'framer-motion'
-
-const sliderVariants = {
-  hidden: {
-    opacity: 0,
-    y: 50,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-}
+import { useState, useEffect, useRef } from "react";
 
 const Slider = () => {
-    const [value, setValue] = useState(2)
+  const [value, setValue] = useState(2);
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    }
 
   return (
-    <motion.div
-        layout
-        variants={sliderVariants}
-        initial="hidden"
-        animate="visible" 
-        className='flex flex-col justify-center items-center'
-    >
-        <label htmlFor="minmax-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            {value} Players Selected
-        </label>
-        <input
-            id="minmax-range"
-            type="range"
-            min="2"
-            max="10"
-            value={value}
-            onChange={handleChange}
-            className="w-80 h-6 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-        />
-    </motion.div>
-
+      <div className="flex flex-col w-96 bg-white rounded-lg px-6 py-4">
+        <div className="flex w-full justify-center">
+          <label className="block text-gray-700 text-sm font-bold mb-2"> {value} PLAYERS SELECTED </label>
+        </div>
+        <div className="mb-4">
+          <div className="slider relative h-1 rounded-md bg-gray-300">
+            <div
+              className="progress absolute h-1 bg-green-300 rounded "
+            ></div>
+          </div>
+          <div className="range-input relative  ">
+            <input
+              onChange={(e) => {setValue(e.target.value)}}
+              type="range"
+              min="2"
+              max="10"
+              step="1"
+              value={value}
+              className="range-min absolute w-full -top-1 h-1 bg-transparent appearance-none pointer-events-none"
+            />
+          </div>
+        </div>
+      </div>
   )
 }
 

@@ -31,7 +31,7 @@ const PlayCardGame = () => {
             />
         )}
         </AnimatePresence>
-        <div className='flex flex-col justify-center items-center py-2'>
+        <div className='flex flex-col justify-center items-center py-2 w-1/2'>
           <button onClick={handleNext} className="bg-black dark:bg-white text-white dark:text-black border border-white dark:border-black w-1/3 py-2 px-4 rounded my-4">
               SHUFFLE
           </button>
