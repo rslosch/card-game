@@ -12,6 +12,7 @@ import Signup from "./components/Signup"
 import Login from "./components/Login"
 import Hero from "./components/HeroSection/Hero"
 import PlayCardGame from "./components/GameSection/PlayCardGame"
+import PostSuggestedCards from "./components/PostSuggestedCards"
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
         <Routes>
           <Route path ='/signup' element={<Signup />}/>
           <Route path ='/login' element={<Login />}/>
-          <Route path='/' element={<><Hero/><PlayCardGame/></>} />
+          <Route path='/' element={<><Hero/><PlayCardGame/><PostSuggestedCards /></>} />
           <Route path='play' element={<PlayCardGame />} />
         </Routes>
       </UserProvider>
