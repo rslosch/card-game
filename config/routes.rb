@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :cards
+
+  post '/suggested_cards', to: 'suggested_cards#create'
  
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
