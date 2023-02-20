@@ -5,7 +5,7 @@ import Slider from './Slider'
 import { CardsContext } from '../../context/cardsContext'
 
 import { useState } from "react"
-import { AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const PlayCardGame = () => {
     const [currentCard, setCurrentCard] = useState(0)
@@ -37,10 +37,15 @@ const PlayCardGame = () => {
       )}
       </AnimatePresence>
       <div className='flex flex-col justify-center items-center py-2 w-1/2'>
-        <p className="text-gray-700 dark:text-white text-sm font-bold">PLAYER <strong>{randomPlayer}</strong> STARTS </p>
-        <button onClick={handleNext} className="bg-black dark:bg-white text-white dark:text-black border border-white dark:border-black w-32 py-2 px-4 rounded">
+        {randomPlayer && <p className="text-gray-700 dark:text-white text-sm font-bold">PLAYER <strong>{randomPlayer}</strong> STARTS </p>}
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: ['hsl(38, 37, 57)','hsl(38, 93%, 77%)'], transition: { duration: 0.5 }}}
+          onTap = {{ scale: 0.9 }} 
+          onClick={handleNext} 
+          className="bg-primary-3 dark:bg-white text-white dark:text-black border border-white dark:border-black w-32 py-2 px-4 rounded"
+          >
             SHUFFLE
-        </button>
+        </motion.button>
         <Slider value={numberPlayers} setValue={setNumberPlayers} />
       </div>
   </div>
