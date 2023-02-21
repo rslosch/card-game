@@ -34,7 +34,7 @@ const Slider = ({value, setValue}) => {
   return (
       <div className="flex flex-col w-96 bg-white dark:bg-black rounded-lg px-6 py-4">
         <div className="flex w-full justify-center">
-          <label className="block text-gray-700 dark:text-white text-sm font-bold mb-3"> {value} PLAYERS SELECTED </label>
+          <label className="block text-gray-700 dark:text-white text-sm font-bold mb-3"> {value} PLAYERS </label>
         </div>
         <div className="mb-4 w-full">
           <div className="slider relative h-1 rounded-md bg-gray-300">

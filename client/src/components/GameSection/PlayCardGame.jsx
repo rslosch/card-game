@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion"
 const PlayCardGame = () => {
     const [currentCard, setCurrentCard] = useState(0)
     const [numberPlayers, setNumberPlayers] = useState(2)
-    const [randomPlayer, setRandomPlayer] = useState(null)
+    const [randomPlayer, setRandomPlayer] = useState(1)
 
     const { cards } = useContext(CardsContext)
 
@@ -27,8 +27,8 @@ const PlayCardGame = () => {
     }
   
   return (
-    <div className="flex flex-col justify-center items-center h-full w-full md:h-screen md:w-screen dark:bg-black">
-      <AnimatePresence mode='wait'>
+    <div className="flex flex-col justify-center items-center py-8 w-full md:h-screen md:w-screen dark:bg-black">
+      <AnimatePresence mode='wait' >
       {currentCardIndex !== -1 && (
           <GameCard
             key={cards[currentCardIndex].id}
@@ -37,7 +37,7 @@ const PlayCardGame = () => {
       )}
       </AnimatePresence>
       <div className='flex flex-col justify-center items-center py-2 w-1/2'>
-        {randomPlayer && <p className="text-gray-700 dark:text-white text-sm font-bold">PLAYER <strong>{randomPlayer}</strong> STARTS </p>}
+        <p className="text-gray-700 dark:text-white text-sm font-bold">PLAYER <strong>{randomPlayer}</strong> STARTS </p>
         <motion.button
           whileHover={{ scale: 1.1, backgroundColor: ['hsl(38, 37, 57)','hsl(38, 93%, 77%)'], transition: { duration: 0.5 }}}
           onTap = {{ scale: 0.9 }} 

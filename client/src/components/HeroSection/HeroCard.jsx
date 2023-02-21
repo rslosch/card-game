@@ -33,38 +33,41 @@ const HeroCard = ({ period }) => {
         }),
     }
 
-    //Add conditional check if small screen or not
+    //LOWEST Y VALUE IS -260 (TOP OF SCREEN)
+    //HIGHEST Y VALUE IS 135 (BOTTOM OF SCREEN)
+    //X VALUE +-240 (EDGE OF MAIN CARD) (+-220 for a bit of MainCard overlap)
+
     const childrenInfo = [
         {
-          x: isSmallScreen ? 80 : 230,
-          y: isSmallScreen ? -190 : -280,
-          rotate: -12,
-        },
-        {
-          x: isSmallScreen ? 110 : 300, 
-          y: isSmallScreen ? 0 : 0,
-          rotate: 22,
+          x: !isSmallScreen ? 140 + Math.floor(Math.random() * 40 - 20) : 80 + Math.floor(Math.random() * 20 - 10), 
+          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
+          rotate:  Math.round(Math.random() * 40 - 20),
 
         },
         {
-          x: isSmallScreen ? 110: 350, 
-          y: isSmallScreen ? 150: 200,
-          rotate: 14,
+          x: !isSmallScreen ? 400 + Math.floor(Math.random() * 80 - 40) : 110 + Math.floor(Math.random() * 20 - 10),
+          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
+          rotate:  Math.round(Math.random() * 40 - 20),
         },
         {
-          x: isSmallScreen ? -75 : -150, 
-          y: isSmallScreen ? 160 : 220,
-          rotate: -18,
+          x: !isSmallScreen ? 240 + Math.floor(Math.random() * 80 - 40) : 80 + Math.floor(Math.random() * 20 - 10),
+          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20) ,
+          rotate:  Math.round(Math.random() * 40 - 20),
         },
         {
-          x: isSmallScreen ? -133 : -400, 
-          y: isSmallScreen ? -35 : -50,
-          rotate: -7,          
+          x: !isSmallScreen ? -240 + Math.floor(Math.random() * 80 - 40) : -80 + Math.floor(Math.random() * 20 - 10),
+          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20),
+          rotate:  Math.round(Math.random() * 40 - 20),
         },
         {
-          x: isSmallScreen ? -75: -150,
-          y: isSmallScreen ? -175 : -200,
-          rotate: 5,
+          x: !isSmallScreen ? -400 + Math.floor(Math.random() * 80 - 40) : -110 + Math.floor(Math.random() * 20 - 10),
+          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
+          rotate:  Math.round(Math.random() * 40 - 20),
+        },
+        {
+          x: !isSmallScreen ? -140 + Math.floor(Math.random() * 40 - 20) : -80 + Math.floor(Math.random() * 20 - 10),
+          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
+          rotate:  Math.round(Math.random() * 40 - 20),
         },
     ]
 
@@ -100,9 +103,13 @@ const HeroCard = ({ period }) => {
           animate="visible"
           variants={mainHeroCardVariant} 
           custom={period}
-          className="h-48 w-36 md:h-96 md:w-72 z-[101] relative"
+          // className="h-48 w-36 md:h-96 md:w-72 relative"
+          className="h-48 w-36 md:h-[360px] md:w-64 relative"
+
       > 
-        <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"} subtype={"Main"}/>
+        <div className='w-full h-full absolute z-[99]'>
+          <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"}/>
+        </div>
         {randomHeroCards.map((card, index) => (
         <motion.div 
             key={card.id} 

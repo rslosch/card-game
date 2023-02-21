@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import HeroCard from './HeroCard'
-
-import { CardsContext } from '../../context/cardsContext'
 
 import { motion } from 'framer-motion'
 
 const Hero = () => {
-  const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
 
   const [loopNum, setLoopNum] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
