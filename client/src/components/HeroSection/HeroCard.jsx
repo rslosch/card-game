@@ -1,140 +1,67 @@
 import React, { useState, useContext } from 'react'
 import Card from '../Card'
 
-import { CardsContext } from '../../context/cardsContext'
-import { ScreenSizeContext } from '../../context/screenSizeContext'
-
 import { motion } from "framer-motion"
 
-const HeroCard = ({ period }) => {
-  const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
-  const { isSmallScreen } = useContext(ScreenSizeContext)
+const HeroCard = ({ id, content, index, delay, totalCards }) => {
 
+  const spreadAngle = 40 / (totalCards - 1)// adjust this value to change the spread angle
+  const spreadStart = -spreadAngle * (totalCards - 1) / 2  
+  const rotate = spreadStart + index * spreadAngle
 
-    const mainHeroCardVariant = {
-        hidden: {
-            opacity: 0,
-            y: -window.innerHeight
-        },
-        visible: (period) => ({
-            opacity: 1,
-            zIndex: 100,
-            y: 0,
-            scale: [2.5,0.6,1],
-            rotate: [0,5,15,30,20,0],
-            transition:{
-                type: "spring",
-                ease: "easeInOut",
-                delay: (period * 9) /1000,
-                duration: (period * 0.5) /1000,
-                delayChildren: (period * 10) /1000,
-                staggerChildren: (period * 0.08) /1000,
-            } 
-        }),
+  const xSpacing = 150 // adjust this value to change spacing between cards
+  const xSpacing2 = xSpacing * 2
+
+  const childrenInfo = Array.from({ length: totalCards }, (_, i) => ({
+    x0: 0,
+    x1: -xSpacing/2 + i * xSpacing/(totalCards - 1),
+    x2: -xSpacing2/2 + i * xSpacing2/(totalCards - 1),
+    y: Math.sin(rotate * Math.PI / 180), // Adding a multiplier here will increase the height of the fan
+    delay: delay + i * 0.05,
+    scale0: 1,
+    scale1: 1.1,
+    scale2: 1.3,
+    scale3: 1,
+  }))
+
+  const childrenHeroCardVariant = {
+    hidden: {
+      opacity: 0,
+      rotate: 360,
+      x: 0,
+      y: 0,
+    },
+    visible: (childrenInfo) => ({
+      opacity: [1,1,1,1],
+      scale: [childrenInfo.scale0, childrenInfo.scale1, childrenInfo.scale2, childrenInfo.scale3],
+      rotate: [null,null,null,rotate],
+      x: [childrenInfo.x0, childrenInfo.x1, childrenInfo.x1 * 1.2, childrenInfo.x2],
+      y: [childrenInfo.y, childrenInfo.y+20,childrenInfo.y-10, childrenInfo.y ],
+      transition: {
+        times:[0.4,0.6,0.7,1], 
+        duration: 2,
+      },
+    }),
+    hover: {
+      scale: 1.1,
+      transition: { duration: 0.1 },
     }
-
-    //LOWEST Y VALUE IS -260 (TOP OF SCREEN)
-    //HIGHEST Y VALUE IS 135 (BOTTOM OF SCREEN)
-    //X VALUE +-240 (EDGE OF MAIN CARD) (+-220 for a bit of MainCard overlap)
-
-    const childrenInfo = [
-        {
-          x: !isSmallScreen ? 140 + Math.floor(Math.random() * 40 - 20) : 80 + Math.floor(Math.random() * 20 - 10), 
-          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-
-        },
-        {
-          x: !isSmallScreen ? 400 + Math.floor(Math.random() * 80 - 40) : 110 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? 240 + Math.floor(Math.random() * 80 - 40) : 80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20) ,
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -240 + Math.floor(Math.random() * 80 - 40) : -80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -400 + Math.floor(Math.random() * 80 - 40) : -110 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -140 + Math.floor(Math.random() * 40 - 20) : -80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-    ]
-
-    const childrenHeroCardVariant = {
-        hidden: {
-            opacity: 0,
-            x: 0,
-            y: 0
-        },
-        visible: (childrenInfo) => ({
-            opacity: 1,
-            x: childrenInfo.x,
-            y: childrenInfo.y,
-            rotate: childrenInfo.rotate,
-            transition:{
-                type: "spring",
-                bounce: 0.7,
-                duration: 1.2
-            }
-        })
-    }
-  
-  if (!randomHeroCards || !mainHeroCard) {
-    return (
-      <></>
-    )
-  } 
-  else {  
-    return (
-      <motion.div
-          key={mainHeroCard.id}
-          initial="hidden" 
-          animate="visible"
-          variants={mainHeroCardVariant} 
-          custom={period}
-          // className="h-48 w-36 md:h-96 md:w-72 relative"
-          className="h-48 w-36 md:h-[360px] md:w-64 relative"
-
-      > 
-        <div className='w-full h-full absolute z-[99]'>
-          <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"}/>
-        </div>
-        {randomHeroCards.map((card, index) => (
-        <motion.div 
-            key={card.id} 
-            id={card.id} 
-            variants={childrenHeroCardVariant}
-            custom={childrenInfo[index]}
-            whileHover={{ 
-              scale: [0.9, 1.1],
-              rotate: [childrenInfo[index].rotate,0, childrenInfo[index].rotate],
-              zIndex: 100
-              // transition:{
-              //   type: "spring",
-              //   duration: 2,
-              //   repeat: 1,
-              //   repeatType: 'mirror',
-              // }
-            }}
-            className={`h-full w-full absolute top-0 left-0 z-${randomHeroCards.length-index}`}
-        >
-          <Card id={card.id} content={card.content} type={"HeroCard"}/>
-        </motion.div>
-          ))}
-      </motion.div>   
-    )
   }
+  return (  
+    <motion.div 
+        key={id} 
+        id={id}
+        variants={childrenHeroCardVariant}
+        initial="hidden"
+        animate="visible" 
+        custom={childrenInfo[index]}
+        whileHover="hover"
+        className={`md:h-[360px] md:w-64 absolute z-${totalCards-index}`}
+    >
+      <Card id={id} content={content} type={"HeroCard"}/>
+    </motion.div>
+  )
 }
+    
 
 export default HeroCard

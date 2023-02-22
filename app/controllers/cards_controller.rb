@@ -9,7 +9,7 @@ class CardsController < ApplicationController
   end
 
   def getRandomHeros
-    hero_cards = Card.all.sample(7) # Replace `HeroCard` with your model name
+    hero_cards = Card.all.sample(14) # Replace `HeroCard` with your model name
 
     render json: hero_cards
   end

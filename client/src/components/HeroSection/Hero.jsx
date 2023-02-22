@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import HeroCardAnimation from './HeroCardAnimation'
 import HeroCard from './HeroCard'
 
 import { motion } from 'framer-motion'
@@ -10,7 +11,7 @@ const Hero = () => {
   const [text, setText] = useState('')
   const [delta, setDelta] = useState(200)
   const toRotate = [ "AGAINST", "FOR INSANITY"] 
-  const period = 1000 // Change this to increase/decrease the speed of the interval
+  const period = 100 // Change this to increase/decrease the speed of the interval
 
   // Ref to make interval clearable within tick()
   const tickerRef = useRef(null)
@@ -82,7 +83,7 @@ const Hero = () => {
         >
           <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
         </motion.div>
-        <HeroCard period={period}/>
+        <HeroCardAnimation period={period}/>
       </div>
     </div>
   )
