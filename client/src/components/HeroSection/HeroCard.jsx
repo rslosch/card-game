@@ -6,6 +6,8 @@ import { ScreenSizeContext } from '../../context/screenSizeContext'
 
 import { motion, AnimatePresence, useAnimationControls } from "framer-motion"
 
+import { GoArrowDown } from 'react-icons/go'
+
 const HeroCard = ({ complete, period }) => {
   const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
   const { isSmallScreen } = useContext(ScreenSizeContext)
@@ -113,12 +115,29 @@ const HeroCard = ({ complete, period }) => {
   } 
   else {  
     return (
+      <>
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: ((totalAnimationTime/period)+1.4), duration: 0.1, ease: 'easeInOut' }}
+            className={`${isSmallScreen ? "top-28": "top-0"} uppercase absolute text-3xl md:text-6xl text-primary-2 dark:text-white font-bold`}
+          >
+            Play Below
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 20, transition: { delay: ((totalAnimationTime/period)+1.4), duration: 0.5, repeat: Infinity, repeatType: 'mirror' } }}
+            className={`${isSmallScreen ? "top-36": "top-12"} absolute text-6xl md:text-6xl text-primary-2 dark:text-white`}
+          >
+            <GoArrowDown />
+          </motion.div>
+
           <motion.div
           key={mainHeroCard.id}
           variants={mainHeroCardVariant} 
           animate={controls}
           custom={period}
-          className="h-48 w-36 md:h-[360px] md:w-64 relative"
+          className="h-48 w-36 md:h-96 md:w-72 relative"
         > 
           <div className='w-full h-full absolute z-[99]'>
             <Card id={mainHeroCard.id} content="Get ready to go insane" type={"HeroCard"}/>
@@ -154,7 +173,9 @@ const HeroCard = ({ complete, period }) => {
               </motion.div>
             )))}
           </AnimatePresence>
-        </motion.div>)
+        </motion.div>
+      </>
+    )
   }
 }
 

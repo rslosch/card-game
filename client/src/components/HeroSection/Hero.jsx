@@ -76,7 +76,7 @@ const Hero = () => {
   
   return (
     <div className='dark:bg-black pt-8 overflow-hidden'>
-      <div className='flex flex-col justify-center items-center h-screen w-screen'>
+      <div className='flex flex-col justify-center items-center h-screen w-screen '>
         <motion.div
           initial="visible"
           animate="hidden"
@@ -85,7 +85,13 @@ const Hero = () => {
         >
           <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
         </motion.div>
-        {isComplete && <HeroCard complete={isComplete} period={period}/>}
+        
+          {isComplete && (
+            <div className='flex flex-col justify-center items-center w-screen h-full relative'>
+              <HeroCard complete={isComplete} period={period}/>
+            </div>
+          )}
+          
       </div>
     </div>
   )
