@@ -27,7 +27,7 @@ const PlayCardGame = () => {
     }
   
   return (
-    <div className="flex flex-col justify-center items-center py-8 w-full md:h-screen md:w-screen dark:bg-black">
+    <div className="flex flex-col justify-center items-center w-full md:h-screen md:w-screen dark:bg-black">
       <AnimatePresence mode='wait' >
       {currentCardIndex !== -1 && (
           <GameCard

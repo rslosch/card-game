@@ -34,7 +34,7 @@ const SuggestedCard = () => {
     }, [errors])
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center relative bg-white dark:bg-black">
+    <form onSubmit={handleSubmit} className="flex flex-col items-center relative bg-white dark:bg-black pb-4">
       <div class="flex flex-col items-center justify-start p-4 rounded-xl bg-white dark:bg-black shadow-md border-2 border-black dark:border-white h-96 w-72">
           <div class="flex items-center justify-center m-auto w-full h-full">
               <textarea 

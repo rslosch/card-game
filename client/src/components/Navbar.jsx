@@ -19,8 +19,9 @@ const Navbar = ({onThemeSwitch, theme}) => {
 
     useEffect(() => {
       const handleScroll = () => {
-        setShowHeader(window.pageYOffset < 100 || window.pageYOffset > 600)
-      };
+        if(!isSmallScreen) setShowHeader(window.pageYOffset < 100 || window.pageYOffset > 600)
+        else setShowHeader(window.pageYOffset < 250 || (window.pageYOffset > 600 && window.pageYOffset < 800))
+      }
   
       window.addEventListener("scroll", handleScroll)
   

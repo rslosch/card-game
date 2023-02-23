@@ -13,6 +13,7 @@ import Login from "./components/Login"
 import Hero from "./components/HeroSection/Hero"
 import PlayCardGame from "./components/GameSection/PlayCardGame"
 import PostSuggestedCards from "./components/PostSuggestedCards"
+import Footer from "./components/Footer"
 
 function App() {
 
@@ -35,13 +36,14 @@ function App() {
       <CardsProvider>
       <ScreenSizeProvider>
       <UserProvider>
-      <Navbar onThemeSwitch={handleThemeSwitch} theme={theme} />
+        <Navbar onThemeSwitch={handleThemeSwitch} theme={theme} />
         <Routes>
           <Route path ='/signup' element={<Signup />}/>
           <Route path ='/login' element={<Login />}/>
           <Route path='/' element={<><Hero/><PlayCardGame/><PostSuggestedCards /></>} />
           <Route path='play' element={<PlayCardGame />} />
         </Routes>
+        <Footer />
       </UserProvider>
       </ScreenSizeProvider>
       </CardsProvider>
