@@ -1,36 +1,51 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Card from '../Card'
 
 import { CardsContext } from '../../context/cardsContext'
 import { ScreenSizeContext } from '../../context/screenSizeContext'
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence, useAnimationControls } from "framer-motion"
 
-const HeroCard = ({ period }) => {
+const HeroCard = ({ complete, period }) => {
   const { randomHeroCards, mainHeroCard } = useContext(CardsContext)
   const { isSmallScreen } = useContext(ScreenSizeContext)
 
+  const [isVisible, setIsVisible] = useState(true)
+
+  const controls = useAnimationControls()
+
+  const totalAnimationTime = period * 10
+
+  useEffect(() => {
+    if(complete) {
+      console.log('start timer')
+      controls.start("visible")
+      const timeoutId = setTimeout(() => {
+        setIsVisible(false)
+      }, totalAnimationTime)
+      return () => clearTimeout(timeoutId)
+    }
+  }, [])
 
     const mainHeroCardVariant = {
         hidden: {
             opacity: 0,
             y: -window.innerHeight
         },
-        visible: (period) => ({
+        visible: {
             opacity: 1,
             zIndex: 100,
             y: 0,
             scale: [2.5,0.6,1],
-            rotate: [0,5,15,30,20,0],
+            rotate: [0,30,0],
             transition:{
                 type: "spring",
                 ease: "easeInOut",
-                delay: (period * 9) /1000,
-                duration: (period * 0.5) /1000,
-                delayChildren: (period * 10) /1000,
-                staggerChildren: (period * 0.08) /1000,
-            } 
-        }),
+                duration: 0.5,
+                delayChildren: 0.5,
+                staggerChildren: 0.1,
+            },
+        }
     }
 
     //LOWEST Y VALUE IS -260 (TOP OF SCREEN)
@@ -84,56 +99,62 @@ const HeroCard = ({ period }) => {
             rotate: childrenInfo.rotate,
             transition:{
                 type: "spring",
-                bounce: 0.7,
-                duration: 1.2
+                bounce: 0.6,
+                duration: 1.2,
+                dampness: 1.2
             }
-        })
+        }),
     }
   
-  if (!randomHeroCards || !mainHeroCard) {
+  if (!complete || !randomHeroCards || !mainHeroCard) {
     return (
       <></>
     )
   } 
   else {  
     return (
-      <motion.div
+          <motion.div
           key={mainHeroCard.id}
-          initial="hidden" 
-          animate="visible"
           variants={mainHeroCardVariant} 
+          animate={controls}
           custom={period}
-          // className="h-48 w-36 md:h-96 md:w-72 relative"
           className="h-48 w-36 md:h-[360px] md:w-64 relative"
-
-      > 
-        <div className='w-full h-full absolute z-[99]'>
-          <Card id={mainHeroCard.id} content={mainHeroCard.content} type={"HeroCard"}/>
-        </div>
-        {randomHeroCards.map((card, index) => (
-        <motion.div 
-            key={card.id} 
-            id={card.id} 
-            variants={childrenHeroCardVariant}
-            custom={childrenInfo[index]}
-            whileHover={{ 
-              scale: [0.9, 1.1],
-              rotate: [childrenInfo[index].rotate,0, childrenInfo[index].rotate],
-              zIndex: 100
-              // transition:{
-              //   type: "spring",
-              //   duration: 2,
-              //   repeat: 1,
-              //   repeatType: 'mirror',
-              // }
-            }}
-            className={`h-full w-full absolute top-0 left-0 z-${randomHeroCards.length-index}`}
-        >
-          <Card id={card.id} content={card.content} type={"HeroCard"}/>
-        </motion.div>
-          ))}
-      </motion.div>   
-    )
+        > 
+          <div className='w-full h-full absolute z-[99]'>
+            <Card id={mainHeroCard.id} content="Get ready to go insane" type={"HeroCard"}/>
+          </div>
+          <AnimatePresence >
+            {isVisible && (
+            randomHeroCards.map((card, index) => (
+              <motion.div 
+                key={card.id} 
+                id={card.id}
+                variants={childrenHeroCardVariant}
+                custom={childrenInfo[index]}
+                exit={{ 
+                  y: [null, 0, -window.innerHeight],
+                  rotate: 360,
+                  transition:{
+                    rotate: { 
+                      delay:1,
+                      duration: 0.2, 
+                      repeat: 5, 
+                      repeatType: "loop" 
+                    },
+                    y: { duration: 1.5, times:[0.2,0.92,1] },
+                  }
+                }}
+                whileHover={{ 
+                  scale: [0.9, 1.1],
+                  zIndex: 100
+                }}
+                className={`h-full w-full absolute top-0 left-0 z-${randomHeroCards.length-index}`}
+              >
+                <Card id={card.id} content={card.content} type={"HeroCard"}/>
+              </motion.div>
+            )))}
+          </AnimatePresence>
+        </motion.div>)
   }
 }
 

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 
 const Hero = () => {
 
+  const [isComplete, setIsComplete] = useState(false)
   const [loopNum, setLoopNum] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   const [text, setText] = useState('')
@@ -19,7 +20,6 @@ const Hero = () => {
     tickerRef.current = setInterval(() => {
       tick()
     }, delta)
-
     return () => { clearInterval(tickerRef.current) }
   }, [text, loopNum])
 
@@ -33,6 +33,9 @@ const Hero = () => {
     //EXIT Interval if "FOR INSANITY" text is complete
     if (loopNum === toRotate.length - 1 && updatedText === fullText) {
       clearInterval(tickerRef.current)
+      setTimeout(() => {
+        setIsComplete(true)
+      }, period * 2)
       return
     // Decrease delta (increase speed of interval) during updating text to "FOR INSANITY"
     } else if(loopNum === toRotate.length - 1 && updatedText !== fullText) {
@@ -64,7 +67,7 @@ const Hero = () => {
     hidden: (period) => ({
       opacity: 0,
       transition: {
-        delay: (period * 8) / 1000,
+        delay: (period * 7) / 1000,
         ease: "easeInOut",
         duration: (period * 1) / 1000
       }
@@ -72,7 +75,7 @@ const Hero = () => {
   }
   
   return (
-    <div className='dark:bg-black pt-8'>
+    <div className='dark:bg-black pt-8 overflow-hidden'>
       <div className='flex flex-col justify-center items-center h-screen w-screen'>
         <motion.div
           initial="visible"
@@ -82,7 +85,7 @@ const Hero = () => {
         >
           <h1 className='text-3xl md:text-6xl dark:text-white font-bold'> CARDS <span className='text-primary-2'>{text}</span></h1>
         </motion.div>
-        <HeroCard period={period}/>
+        {isComplete && <HeroCard complete={isComplete} period={period}/>}
       </div>
     </div>
   )
