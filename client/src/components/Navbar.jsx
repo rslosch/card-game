@@ -22,7 +22,7 @@ const Navbar = ({onThemeSwitch, theme}) => {
   useEffect(() => {
     const handleScroll = () => {
       if(!isSmallScreen) setShowHeader(window.pageYOffset < 100 || window.pageYOffset > 600)
-      else setShowHeader(window.pageYOffset < 250 || (window.pageYOffset > 600 && window.pageYOffset < 800))
+      else setShowHeader(window.pageYOffset < 125 || (window.pageYOffset > 575 && window.pageYOffset < 775))
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -48,9 +48,9 @@ const Navbar = ({onThemeSwitch, theme}) => {
 
   const displayLoginOrLogout = (user) => {
     if(user) {
-      return <motion.button key="logout" whileHover={{scale: 1.2}} variants={linkVariants} onClick={handleLogout} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGOUT</motion.button>
+      return <motion.button key="logout" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={handleLogout} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGOUT</motion.button>
     } else {
-      return <motion.button key="login" whileHover={{scale: 1.2}} variants={linkVariants} onClick={() => navigate('/login')} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGIN</motion.button>
+      return <motion.button key="login" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={() => navigate('/login')} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGIN</motion.button>
     }
   }
 
@@ -67,8 +67,9 @@ const Navbar = ({onThemeSwitch, theme}) => {
     opened: {
       top: 0,
       transition: {
+        duration: 0.25,
         when: "beforeChildren",
-        staggerChildren: 0.125,
+        staggerChildren: 0.1,
       },
     },
     closed: {
@@ -106,7 +107,8 @@ const Navbar = ({onThemeSwitch, theme}) => {
                   <motion.button
                     variants={iconVariants}
                     animate={showMenu ? "opened" : "closed"}
-                    whileHover={{scale: 1.2}}
+                    whileHover={{scale: 1.3}}
+                    whileTap={{scale: 0.9}}
                     onClick={() => setShowMenu(!showMenu)}
                     className="dark:text-white hover:text-grey-8 text-sm mr-4"
                   >
@@ -120,14 +122,14 @@ const Navbar = ({onThemeSwitch, theme}) => {
                       exit="exit"
                       className="absolute top-2 right-5 flex flex-col md:w-48 "
                     >
-                      <motion.button key="about" whileHover={{scale: 1.2}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                      <motion.button key="about" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
                         ABOUT
                       </motion.button>
-                      <motion.button key="play" whileHover={{scale: 1.2}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                      <motion.button key="play" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
                         PLAY
                       </motion.button>
                       {displayLoginOrLogout(user)}
-                      <motion.button key="icon" whileHover={{scale: 1.2}} variants={linkVariants} onClick={onThemeSwitch} className="text-black dark:text-white hover:text-grey-8 text-sm self-end">
+                      <motion.button key="icon" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={onThemeSwitch} className="text-black dark:text-white hover:text-grey-8 text-sm self-end">
                         {theme === "light" ? <DarkModeIcon /> : <LightModeIcon /> }
                       </motion.button>
                     </motion.div>
