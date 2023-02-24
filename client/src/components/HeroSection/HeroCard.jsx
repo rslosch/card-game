@@ -20,7 +20,6 @@ const HeroCard = ({ complete, period }) => {
 
   useEffect(() => {
     if(complete) {
-      console.log('start timer')
       controls.start("visible")
       const timeoutId = setTimeout(() => {
         setIsVisible(false)
@@ -29,104 +28,107 @@ const HeroCard = ({ complete, period }) => {
     }
   }, [])
 
-    const mainHeroCardVariant = {
-        hidden: {
-            opacity: 0,
-            y: -window.innerHeight
-        },
-        visible: {
-            opacity: 1,
-            zIndex: 100,
-            y: 0,
-            scale: [2.5,0.6,1],
-            rotate: [0,30,0],
-            transition:{
-                type: "spring",
-                ease: "easeInOut",
-                duration: 0.5,
-                delayChildren: 0.5,
-                staggerChildren: 0.1,
-            },
-        }
+  const mainHeroCardVariant = {
+      hidden: {
+          opacity: 0,
+          y: -window.innerHeight
+      },
+      visible: {
+          opacity: 1,
+          zIndex: 100,
+          y: 0,
+          scale: [2.5,0.6,1],
+          rotate: [0,30,0],
+          transition:{
+              type: "spring",
+              ease: "easeInOut",
+              duration: 0.5,
+              delayChildren: 0.5,
+              staggerChildren: 0.1,
+          },
+      }
     }
 
-    //LOWEST Y VALUE IS -260 (TOP OF SCREEN)
-    //HIGHEST Y VALUE IS 135 (BOTTOM OF SCREEN)
-    //X VALUE +-240 (EDGE OF MAIN CARD) (+-220 for a bit of MainCard overlap)
+  //LOWEST Y VALUE IS -260 (TOP OF SCREEN)
+  //HIGHEST Y VALUE IS 135 (BOTTOM OF SCREEN)
+  //X VALUE +-240 (EDGE OF MAIN CARD) (+-220 for a bit of MainCard overlap)
 
-    const childrenInfo = [
-        {
-          x: !isSmallScreen ? 140 + Math.floor(Math.random() * 40 - 20) : 80 + Math.floor(Math.random() * 20 - 10), 
-          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
+  const childrenInfo = [
+      {
+        x: !isSmallScreen ? 140 + Math.floor(Math.random() * 40 - 20) : 80 + Math.floor(Math.random() * 20 - 10), 
+        y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
+        rotate:  Math.round(Math.random() * 40 - 20),
 
-        },
-        {
-          x: !isSmallScreen ? 400 + Math.floor(Math.random() * 80 - 40) : 110 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? 240 + Math.floor(Math.random() * 80 - 40) : 80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20) ,
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -240 + Math.floor(Math.random() * 80 - 40) : -80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -400 + Math.floor(Math.random() * 80 - 40) : -110 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-        {
-          x: !isSmallScreen ? -140 + Math.floor(Math.random() * 40 - 20) : -80 + Math.floor(Math.random() * 20 - 10),
-          y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
-          rotate:  Math.round(Math.random() * 40 - 20),
-        },
-    ]
+      },
+      {
+        x: !isSmallScreen ? 400 + Math.floor(Math.random() * 80 - 40) : 110 + Math.floor(Math.random() * 20 - 10),
+        y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
+        rotate:  Math.round(Math.random() * 40 - 20),
+      },
+      {
+        x: !isSmallScreen ? 240 + Math.floor(Math.random() * 80 - 40) : 80 + Math.floor(Math.random() * 20 - 10),
+        y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20) ,
+        rotate:  Math.round(Math.random() * 40 - 20),
+      },
+      {
+        x: !isSmallScreen ? -240 + Math.floor(Math.random() * 80 - 40) : -80 + Math.floor(Math.random() * 20 - 10),
+        y: !isSmallScreen ? 120 + Math.floor(Math.random() * 40 - 20) : 140 + Math.floor(Math.random() * 40 - 20),
+        rotate:  Math.round(Math.random() * 40 - 20),
+      },
+      {
+        x: !isSmallScreen ? -400 + Math.floor(Math.random() * 80 - 40) : -110 + Math.floor(Math.random() * 20 - 10),
+        y: !isSmallScreen ? -40 + Math.floor(Math.random() * 40 - 20) : -40 + Math.floor(Math.random() * 40 - 20),
+        rotate:  Math.round(Math.random() * 40 - 20),
+      },
+      {
+        x: !isSmallScreen ? -140 + Math.floor(Math.random() * 40 - 20) : -80 + Math.floor(Math.random() * 20 - 10),
+        y: !isSmallScreen ? -240 + Math.floor(Math.random() * 40 - 20) : -200 + Math.floor(Math.random() * 40 - 20),
+        rotate:  Math.round(Math.random() * 40 - 20),
+      },
+  ]
 
-    const childrenHeroCardVariant = {
-        hidden: {
-            opacity: 0,
-            x: 0,
-            y: 0
-        },
-        visible: (childrenInfo) => ({
-            opacity: 1,
-            x: childrenInfo.x,
-            y: childrenInfo.y,
-            rotate: childrenInfo.rotate,
-            transition:{
-                type: "spring",
-                bounce: 0.6,
-                duration: 1.2,
-                dampness: 1.2
-            }
-        }),
-    }
+  const childrenHeroCardVariant = {
+      hidden: {
+          opacity: 0,
+          x: 0,
+          y: 0
+      },
+      visible: (childrenInfo) => ({
+          opacity: 1,
+          x: childrenInfo.x,
+          y: childrenInfo.y,
+          rotate: childrenInfo.rotate,
+          transition:{
+              type: "spring",
+              bounce: 0.6,
+              duration: 1.2,
+              dampness: 1.2
+          }
+      }),
+  }
   
   if (!complete || !randomHeroCards || !mainHeroCard) {
     return (
       <></>
     )
   } 
+  //period = 1000, multiply = 1.14
+  //period = 750, multiply = 1.19
+  //period = 500, multiply = 1.28
   else {  
     return (
       <>
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: ((totalAnimationTime/period)+1.4), duration: 0.1, ease: 'easeInOut' }}
+            transition={{ delay: ((totalAnimationTime/1000)*1.19), duration: 0.1, ease: 'easeInOut' }}
             className={`${isSmallScreen ? "top-28": "top-0"} uppercase absolute text-3xl md:text-6xl text-primary-2 dark:text-white font-bold`}
           >
             Play Below
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: 1, y: 20, transition: { delay: ((totalAnimationTime/period)+1.4), duration: 0.5, repeat: Infinity, repeatType: 'mirror' } }}
+            animate={{ opacity: 1, y: 20, transition: { delay: ((totalAnimationTime/1000)*1.19), duration: 0.5, repeat: Infinity, repeatType: 'mirror' } }}
             className={`${isSmallScreen ? "top-36": "top-12"} absolute text-6xl md:text-6xl text-primary-2 dark:text-white`}
           >
             <GoArrowDown />

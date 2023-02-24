@@ -11,7 +11,7 @@ const Hero = () => {
   const [text, setText] = useState('')
   const [delta, setDelta] = useState(200)
   const toRotate = [ "AGAINST", "FOR INSANITY"] 
-  const period = 1000 // Change this to increase/decrease the speed of the interval
+  const period = 750 // Change this to increase/decrease the speed of the interval
 
   // Ref to make interval clearable within tick()
   const tickerRef = useRef(null)
@@ -91,7 +91,7 @@ const Hero = () => {
               <HeroCard complete={isComplete} period={period}/>
             </div>
           )}
-          
+
       </div>
     </div>
   )
