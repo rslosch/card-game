@@ -43,14 +43,14 @@ const Navbar = ({onThemeSwitch, theme}) => {
 
     logout()
     //make redirect to home page more fluid
-    navigate('/')
+    navigate('/login')
   }
 
   const displayLoginOrLogout = (user) => {
     if(user) {
-      return <motion.button key="logout" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={handleLogout} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGOUT</motion.button>
+      return <motion.button key="logout" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={handleLogout} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg"> LOGOUT</motion.button>
     } else {
-      return <motion.button key="login" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={() => navigate('/login')} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end"> LOGIN</motion.button>
+      return <motion.button key="login" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={() => navigate('/login')} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg"> LOGIN</motion.button>
     }
   }
 
@@ -114,22 +114,22 @@ const Navbar = ({onThemeSwitch, theme}) => {
                   >
                     <XIcon />
                   </motion.button>
-                  <nav className="relative flex flex-col">
+                  <nav className="relative">
                     <motion.div
                       variants={navVariants}
                       initial={false}
                       animate={showMenu ? "opened" : "closed"}
                       exit="exit"
-                      className="absolute top-2 right-5 flex flex-col md:w-48 "
+                      className="absolute top-2 right-5 flex flex-col md:w-48 items-end "
                     >
-                      <motion.button key="about" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                      <motion.button key="about" onClick={()=> navigate('/')} whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg ">
                         ABOUT
                       </motion.button>
-                      <motion.button key="play" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg self-end">
+                      <motion.button key="play" onClick={() => navigate('play')} whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} className="text-black dark:text-white hover:text-grey-8 text-sm md:text-lg ">
                         PLAY
                       </motion.button>
                       {displayLoginOrLogout(user)}
-                      <motion.button key="icon" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={onThemeSwitch} className="text-black dark:text-white hover:text-grey-8 text-sm self-end">
+                      <motion.button key="icon" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} variants={linkVariants} onClick={onThemeSwitch} className="text-black dark:text-white hover:text-grey-8 text-sm">
                         {theme === "light" ? <DarkModeIcon /> : <LightModeIcon /> }
                       </motion.button>
                     </motion.div>

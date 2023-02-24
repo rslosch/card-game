@@ -56,7 +56,7 @@ const Signup = () => {
           <div className="mb-4">
             <input
               className="form-input w-full border p-2 rounded-lg dark:border-white dark:bg-gray-700 placeholder:dark:text-white"
-              type="email"
+              // type="email"
               name="email"
               id="email"
               placeholder="Email"
