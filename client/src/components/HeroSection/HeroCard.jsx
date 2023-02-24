@@ -133,15 +133,20 @@ const HeroCard = ({ complete, period }) => {
           </motion.div>
 
           <motion.div
-          key={mainHeroCard.id}
-          variants={mainHeroCardVariant} 
-          animate={controls}
-          custom={period}
-          className="h-48 w-36 md:h-96 md:w-72 relative"
-        > 
-          <div className='w-full h-full absolute z-[99]'>
+            key={mainHeroCard.id}
+            variants={mainHeroCardVariant} 
+            animate={controls}
+            custom={period}
+            className="h-48 w-36 md:h-96 md:w-72 relative"
+          > 
+          <motion.div 
+            whileHover={{ 
+              scale: 1.1,
+            }}
+            className='w-full h-full absolute z-[99]'
+          >
             <Card id={mainHeroCard.id} content="Get ready to go insane" type={"HeroCard"}/>
-          </div>
+          </motion.div>
           <AnimatePresence >
             {isVisible && (
             randomHeroCards.map((card, index) => (
